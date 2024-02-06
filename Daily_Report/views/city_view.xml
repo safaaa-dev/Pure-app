@@ -1,0 +1,20 @@
+<odoo>
+    <data>
+        <record id="view_city_form" model="ir.ui.view">
+            <field name="name">ajex.city.form</field>
+            <field name="model">ajex.city</field>
+            <field name="arch" type="xml">
+                <form string="City Form">
+                    <sheet>
+                        <group>
+                            <field name="report_date"/>
+                            <field name="won_opportunities_count"/>
+                            <field name="sale_orders_count"/>
+                            <field name="sales_count"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>
