@@ -1,0 +1,101 @@
+<!-- views/daily_sales_report_views.xml -->
+
+<odoo>
+    <data>
+    <record id="view_daily_sales_report" model="ir.ui.view">
+        <field name="name">daily.sales.report.form</field>
+        <field name="model">daily.sales.report</field>
+        <field name="arch" type="xml">
+            <form string="City Form">
+    <header>
+        <button name="action_set_matching" states="draft" string="Set Matching" type="object" class="oe_highlight"/>
+        <button name="action_set_not_matching" states="draft" string="Set Not Matching" type="object" class="oe_highlight"/>
+        <button name="action_set_draft" states="matching,not_matching" string="Set Draft" type="object" class="oe_highlight"/>
+    </header>
+    <sheet>
+        <!-- الصفحة الأولى -->
+        <group>
+            <field name="state" invisible="1"/>
+            <field name="report_date" string="تاريخ التقرير" help="هذا الحقل يمثل تاريخ التقرير."/>
+
+            <group string="الفرص">
+                <field name="won_opportunities_count" string="عدد الفرص الناجحة" help="عدد الفرص في مرحلة 'ناجحة'."/>
+                <field name="sale_orders_count" string="عدد طلبات البيع" help="عدد طلبات البيع."/>
+            </group>
+	    <group string="نسبة التأكيد">
+                <field name="confirmation_day" string="نسبة التأكيد (%)"
+                       help="نسبة الفرص المؤكدة في اليوم مقارنة بإجمالي الفرص المنشأة في اليوم."/>
+                <field name="confirmation_ratio" string="نسبة التاكيد العامة (%)"
+                       help="نسبة الفرص المؤكدة في اليوم مقارنة بإجمالي الفرص المنشأة في اليوم."/>
+            </group>
+
+            <group string="المبيعات">
+                <field name="sales_count" string="عدد المبيعات" help="عدد المبيعات في حالة 'بيع'."/>
+                <field name="delivery_orders_count" string="عدد طلبات التوصيل" help="عدد طلبات التوصيل المرسلة للعملاء."/>
+            </group>
+
+            <group string="الحسابات">
+                <field name="delivered_delivery_orders_count" string="عدد الشحنات المستلمة" help="عدد المبيعات في حالة 'بيع'."/>
+                <field name="account_invoices_count" string="عدد الفواتير" help="عدد طلبات التوصيل المرسلة للعملاء."/>
+            </group>
+
+            </group>
+
+        <!-- الصفحة الثانية -->
+       <group string="نسب التسليم">
+                    <field name="delivery_ratio" help="هذا الحقل يمثل تاريخ التقرير." string="نسبة التسليم العامة"/>
+                    <field name="delivery_ratio_samsa" string="نسبة تسليم سمسا"/>
+                    <field name="delivery_ratio_quick_silver" string="نسبة تسليم كويك سيلفر"/>
+                    <field name="delivery_ratio_ajax" string="نسبة تسليم أجكس"/>
+                    <field name="delivery_ratio_jordan" string="نسبة تسليم الأردن"/>
+
+        </group>
+    </sheet>
+
+    <div class="oe_chatter">
+        <field name="message_ids"/>
+    </div>
+</form>
+        </field>
+    </record>
+        <record id="view_daily_sales_report_tree" model="ir.ui.view">
+    <field name="name">daily.sales.report.tree</field>
+    <field name="model">daily.sales.report</field>
+    <field name="arch" type="xml">
+        <tree string="Daily Sales Report">
+            <field name="report_date"/>
+            <field name="state" decoration-danger="state=='not_matching'" decoration-info="state== 'draft'" decoration-success="state == 'matching'"/>
+            <field name="won_opportunities_count" invisible="1"/>
+            <field name="sale_orders_count" invisible="1"/>
+            <field name="sales_count" invisible="1"/>
+            <field name="delivery_orders_count" invisible="1"/>
+        </tree>
+    </field>
+</record>
+
+
+    <record id="ir_cron_daily_sales_report" model="ir.cron">
+        <field name="name">Generate Daily Sales Report</field>
+        <field name="model_id" ref="model_daily_sales_report"/>
+        <field name="state">code</field>
+        <field name="code">model.generate_daily_report()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="True"/>
+    </record>
+    <record id="action_city" model="ir.actions.act_window">
+            <field name="name">Daily Report</field>
+            <field name="res_model">daily.sales.report</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+    <menuitem id="root_menu" name="Daily Report" sequence="1"/>
+
+         <menuitem id="reg_menu_1"
+                   name="Daily Report"
+                   parent="root_menu"
+		   action="action_city"
+                   sequence="1"/>
+    </data>
+</odoo>

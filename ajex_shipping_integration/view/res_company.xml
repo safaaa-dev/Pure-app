@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_res_company_ajex_configuration" model="ir.ui.view">
+        <field name="name">AJEX Configuration</field>
+        <field name="model">res.company</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[last()]" position="after">
+                <page string="AJEX Configuration">
+                    <group>
+                        <field name="use_ajex_shipping_provider"/>
+                    </group>
+                    <group attrs="{'invisible': [('use_ajex_shipping_provider', '!=', True)]}">
+                        <field name="ajex_api_url"
+                               attrs="{'required':[('use_ajex_shipping_provider','=',True)]}"/>
+                        <field name="ajax_customer_account"
+                               attrs="{'required':[('use_ajex_shipping_provider','=',True)]}"/>
+                        <field name="ajex_username"
+                               attrs="{'required':[('use_ajex_shipping_provider','=',True)]}"/>
+                        <field name="ajex_password"
+                               attrs="{'required':[('use_ajex_shipping_provider','=',True)]}"/>
+                        <field name="ajex_token"/>
+                        <button name="get_ajax_token" type="object" string="Get Bearer Token"/>
+
+
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

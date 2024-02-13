@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_shipping_invoice,shipping_invoice,model_shipping_invoice,,1,1,1,1
+access_shipping_order_line,shipping_order_line,model_shipping_order_line,,1,1,1,1
+access_supplier_invoice,supplier_invoice,model_supplier_invoice,,1,1,1,1
+access_sec,sec,model_sec,,1,1,1,1
+access_sec_order_line,sec_order_line,model_sec_order_line,,1,1,1,1

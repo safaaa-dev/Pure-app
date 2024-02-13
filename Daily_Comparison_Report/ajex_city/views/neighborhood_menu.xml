@@ -1,0 +1,10 @@
+<odoo>
+    <data>
+        <record id="action_neighborhood" model="ir.actions.act_window">
+            <field name="name">Neighborhoods</field>
+            <field name="res_model">ajex.neighborhood</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        
+    </data>
+</odoo>

@@ -1,0 +1,27 @@
+<odoo>
+    <data>
+        <record id="ajex_shipping_delivery_order_view" model="ir.ui.view">
+            <field name="name">stock.picking</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position='inside'>
+                    <page string="AJEX Information"
+                          attrs="{'invisible': [('delivery_type', '!=', 'ajex_provider')]}">
+                        <group>
+                            <field name="ajex_shipment_status"/>
+                            <field name="ajex_shipment_note"/>
+                            <field name="ajex_delivery_attempt"/>
+
+                            <button name="ajax_tracking_statu" type="object" string="Get Status and Note"/>
+
+                        </group>
+                    </page>
+                </xpath>
+                <xpath expr="//field[@name='carrier_id']" position='after'>
+                    <field name="ajex_shipment_status_push" attrs="{'invisible': [('delivery_type', '!=', 'ajex_provider')]}"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

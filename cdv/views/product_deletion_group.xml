@@ -1,0 +1,47 @@
+<odoo>
+    <data>
+        <record id="view_shipping_invoice_form" model="ir.ui.view">
+            <field name="name">shipping.invoice.form</field>
+            <field name="model">shipping.invoice</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="sale_order_id"/>
+                            <field name="origin" readonly="1"/>
+                            <field name="shipment_cost" readonly="1"/>
+                            <field name="tax_percentage"/>
+                            <field name="cdv" readonly="1"/>
+                            <field name="total_cdv" readonly="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_shipping_invoice_tree" model="ir.ui.view">
+            <field name="name">shipping.invoice.tree</field>
+            <field name="model">shipping.invoice</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="sale_order_id"/>
+                    <field name="origin"/>
+                    <field name="shipment_cost"/>
+                    <field name="tax_percentage"/>
+                    <field name="cdv"/>
+                    <field name="total_cdv"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_view_shipping_invoice" model="ir.actions.act_window">
+            <field name="name">Shipping Invoices</field>
+            <field name="res_model">shipping.invoice</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_shipping_invoice" name="Shipping Invoices" action="action_view_shipping_invoice"/>
+    </data>
+</odoo>

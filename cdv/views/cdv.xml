@@ -1,0 +1,143 @@
+<odoo>
+    <data>
+
+        <record id="view_invoice_tree" model="ir.ui.view">
+            <field name="name">shipping.invoice.tree</field>
+            <field name="model">shipping.invoice</field>
+            <field name="arch" type="xml">
+
+                <tree>
+                    <field name="name"/>
+                    <field name="supplier_id"/>
+                            <field name="total_cdv"/>
+                            <field name="state" />
+                </tree>
+            </field>
+        </record>
+
+         <!-- Shipping Invoice View -->
+        <record id="view_shipping_invoice_form" model="ir.ui.view">
+            <field name="name">shipping.invoice.form</field>
+            <field name="model">shipping.invoice</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="action_to_approve" states="draft" string="Request approval" type="object" class="oe_highlight"/>
+                        <button name="action_approve" states="to_approve" string="Approve" type="object" class="oe_highlight"  />
+                        <button name="action_invoice_creation" states="approved" string="invoice" type="object" class="oe_highlight" />
+                        <button name="action_reject" states="to_approve,approved" string="Reject" type="object"/>
+                        <button name="action_done" states="to_approve,approved" string="Done" type="object" />
+                        <button name="action_set_to_draft" states="to_approve,approved" string="draft" type="object" />
+
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="shipping_company"/>
+                            <field name="supplier_id"/>
+                        </group>
+                        <group>
+
+                            <field name="account_id"/>
+                            <field name="analytic_account_id"/>
+                        </group>
+                        <group>
+
+                            <field name="total_cdv"/>
+                            <field name="state" invisible="1"/>
+                        </group>
+                        <notebook>
+                            <page string="Order Lines">
+                                <field name="order_line" widget="one2many_list" options="{'editable': 'bottom', 'no_create': True, 'no_quick_create': True}">
+                                <tree editable="bottom">
+                                    <field name="state" invisible="1"/>
+                                    <field name="sale_order_id" options="{'no_create': True, 'no_quick_create': True}" unique="true"/>
+                                    <field name="COD_Amount"/>
+                                    <field name="tax_percentage" invisible="1"/>
+                                    <field name="cdv"/>
+                                    <field name="documentation_charge" />
+                                    <field name="admin_charges"/>
+                                    <field name="vat_on_admin_charges"/>
+                                    <field name="total_cdv" />
+                                </tree>
+                            </field>
+
+                            </page>
+                        </notebook>
+			<group>
+
+                            <field name="total_cdv"/>
+                        </group>
+                    </sheet>
+
+                   <div class="oe_chatter">
+                <field name="message_follower_ids"/>
+                <field name="activity_ids"/>
+                <field name="message_ids"/>
+            </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- Shipping Order Line View -->
+        <record id="view_shipping_order_line_form" model="ir.ui.view">
+            <field name="name">shipping.order.line.form</field>
+            <field name="model">shipping.order.line</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                           <field name="sale_order_id" options="{'no_create': True, 'no_quick_create': True}" unique="true"/>
+                                    <field name="COD_Amount"/>
+                                    <field name="tax_percentage" invisible="1"/>
+                                    <field name="cdv"/>
+                                    <field name="documentation_charge" />
+                                    <field name="admin_charges"/>
+                                    <field name="vat_on_admin_charges"/>
+                                    <field name="total_cdv" />
+                            <field name="state" invisible="1"/>
+
+                        </group>
+                    </sheet>
+
+
+                    <footer>
+                        <button string="Approve" type="object" class="oe_highlight" name="action_approve"/>
+                        <button string="Set to Draft" type="object" class="oe_highlight" name="action_set_to_draft" states="approved"/>
+                    </footer>
+                    <div class="oe_chatter">
+                <field name="message_follower_ids"/>
+                <field name="activity_ids"/>
+                <field name="message_ids"/>
+            </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="menu_shipping_sec" model="ir.actions.act_window">
+            <field name="name">SEC</field>
+            <field name="res_model">sec</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        
+        <record id="menu_shipping_cdv" model="ir.actions.act_window">
+            <field name="name">CDV</field>
+            <field name="res_model">shipping.invoice</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <record id="action_view_shipping_invoice" model="ir.actions.act_window">
+            <field name="name">Shipping Invoices</field>
+            <field name="res_model">shipping.invoice</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_shipping_invoice" name="Shipping Invoices" action="action_view_shipping_invoice"/>
+        <menuitem id="SEC_menu" name="SEC" action="menu_shipping_sec" parent="menu_shipping_invoice" sequence="20"/>
+        <menuitem id="CDV_menu" name="CDV" action="menu_shipping_cdv" parent="menu_shipping_invoice" sequence="10"/>
+
+
+        
+    </data>
+</odoo>
+
+

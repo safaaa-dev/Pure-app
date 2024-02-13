@@ -1,0 +1,104 @@
+<odoo>
+    <data>
+        
+        <record id="view_shipping_invoice_tree" model="ir.ui.view">
+            <field name="name">sec.tree</field>
+            <field name="model">sec</field>
+            <field name="arch" type="xml">
+
+                <tree>
+                    <field name="name"/>
+                    <field name="total_cdv"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_shiping_invoice_form" model="ir.ui.view">
+            <field name="name">sec.form</field>
+            <field name="model">sec</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="action_to_approve" states="draft" string="Request approval" type="object" class="oe_highlight"/>
+                        <button name="action_approve" states="to_approve" string="Approve" type="object" class="oe_highlight"  />
+                        <button name="action_invoice_creation" states="approved" string="invoice" type="object" class="oe_highlight" />
+                        <button name="action_reject" states="to_approve,approved" string="Reject" type="object"/>
+                        <button name="action_done" states="to_approve,approved" string="Done" type="object" />
+                        <button name="action_set_to_draft" states="to_approve,approved" string="draft" type="object" />
+
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                        <group>
+
+                            <field name="supplier_id"/>
+                            <field name="total_cdv"/>
+                            <field name="state" invisible="1"/>
+                        </group>
+                        <notebook>
+                            <page string="Order Lines">
+                                <field name="order_line" widget="one2many_list" options="{'editable': 'bottom', 'no_create': True, 'no_quick_create': True}">
+                                <tree editable="bottom">
+
+                            <field name="sale_order_id" />
+                            <field name="COD_Amount"/>
+                            <field name="Delivery_Charges"/>
+                            <field name="GPA"/>
+                            <field name="Return_Charges"/>
+                            <field name="total_cdv"/>
+
+                                </tree>
+                            </field>
+
+                            </page>
+                        </notebook>
+			<group>
+
+                            <field name="total_cdv"/>
+                        </group>
+                    </sheet>
+
+                   <div class="oe_chatter">
+                <field name="message_follower_ids"/>
+                <field name="activity_ids"/>
+                <field name="message_ids"/>
+            </div>
+                </form>
+            </field>
+        </record>
+        <record id="view_shiping_order_line_form" model="ir.ui.view">
+            <field name="name">sec.line.form</field>
+            <field name="model">sec.order.line</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                           <field name="order_line" widget="one2many_list" options="{'editable': 'bottom', 'no_create': True, 'no_quick_create': True}"/>
+                                <tree editable="bottom">
+
+                            <field name="sale_order_id" />
+                            <field name="COD_Amount"/>
+                            <field name="Delivery_Charges"/>
+                            <field name="GPA"/>
+                            <field name="Return_Charges"/>
+                            <field name="total_cdv"/>
+                            </tree>
+                        </group>
+                    </sheet>
+
+                    <div class="oe_chatter">
+                <field name="message_follower_ids"/>
+                <field name="activity_ids"/>
+                <field name="message_ids"/>
+            </div>
+                </form>
+            </field>
+        </record>
+        
+        
+        
+       
+        
+    </data>
+</odoo>
